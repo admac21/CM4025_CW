@@ -1,0 +1,91 @@
+main {
+	padding-top:30px;
+}
+
+/* HEADER
+======================== */
+header.navbar {
+	border-radius:0;
+}
+
+
+/* ANIMATIONS
+======================== */
+.spinner {
+	animation:spin 1s infinite;
+	-webkit-animation:spin 1s infinite;
+	-moz-animation:spin 1s infinite;
+}
+
+@keyframes spin {
+	from { transform:rotate(0deg); }
+	to { transform:rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
+	from { -webkit-transform:rotate(0deg); }
+	to { -webkit-transform:rotate(360deg); }
+}
+
+@-moz-keyframes spin {
+	from { -moz-transform:rotate(0deg); }
+	to { -moz-transform:rotate(360deg); }
+}
+
+/* NGANIMATE
+======================== */
+
+/* show and hide */
+.show-hide-message.ng-hide-remove {
+    -webkit-animation:zoomIn 0.3s both ease;
+    -moz-animation:zoomIn 0.3s both ease;
+    animation:zoomIn 0.3s both ease;
+}
+.navbar-fixed-left {
+    width: 240px;
+    position: : relative;
+    overflow: auto;
+    border-radius: 0;
+    height: 100vw;
+    float: left;
+}
+
+.navbar-fixed-left .navbar-nav > li {
+    float: none; 
+    width: 139px;
+}
+
+.navbar-fixed-left + .container {
+    padding-left: 160px;
+}
+
+.navbar-fixed-left .navbar-nav > li > .dropdown-menu {
+    margin-top: -50px;
+    margin-left: 140px;
+}
+
+.navbar-brand {
+    text-transform: uppercase;
+    width: 139px;
+    text-align: center;
+
+}
+
+.wrapper {
+    margin-top: -61px;
+    min-height: 100vh;
+    position: relative;
+    left: 0;
+    background-color: white;
+    top: 0;
+}
+
+.sidebar {
+    right: 0 !important;
+    left: auto;
+    position: fixed;
+}
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}

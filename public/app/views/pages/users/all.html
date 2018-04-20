@@ -1,0 +1,47 @@
+<!-- LOADING MESSAGE -->
+<div class="jumbotron text-center" ng-show="user.processing">
+	<span class="glyphicon glyphicon-repeat spinner"></span>
+	<p>Loading users...</p>
+</div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card striped-tabled-with-hover">
+                    <div class="card-header">
+                        <h1 class="card-title">Staff<a href="/users/create" class="btn btn-primary btn-fill pull-right btn-round">
+                            <i class="nc-icon nc-simple-add"></i>
+                            <span>New Staff Member</span>
+                        </a></h1>
+                        
+                    </div>
+                    <div class="card-body table-full-width table-responsive">
+                        <table class="table table-hover table-striped"  ng-show="user.users">
+                            <thead>
+                                <th class="col-sm-2"></th>
+                                <th>_id</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th class="col-sm-2"></th>
+                            </thead>
+                            <tbody>
+                                <!-- LOOP OVER THE USERS -->
+                                <tr ng-repeat="person in user.users">
+                                    <td class="col-sm-2">
+                                        <a ng-href="/users/{{ person._id }}" class="btn btn-info btn-fill pull-left btn-round">View</a>
+                                    </td>
+                                    <td> {{ person._id }} </td>
+                                    <td> {{ person.name }} </td>
+                                    <td> {{ person.username }} </td>
+                                    <td class="col-sm-2">
+                                        <a href="#" ng-click="user.deleteUser(person)" class="btn btn-danger btn-round">X</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,16 @@
+{
+  "name": "Umbra",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "angularjs-autogrow": "^0.4.0",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.15.1",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^6.2.0",
+    "mongoose": "~4.4.17",
+    "mongoose-auto-increment": "^5.0.1",
+    "morgan": "1.7.0",
+    "ngx-autosize": "^1.0.0"
+  }
+}

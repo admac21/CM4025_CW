@@ -1,0 +1,237 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row" ng-if="job.type == 'view' || job.type == 'update'">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="text-muted">Job: {{ job.jobData.job_number }} </h3>
+                            </div>
+                            <div class="col-md-4">
+                                <h3 class="text-center text-muted">Created:  {{ job.jobData.created_at | date: 'dd/MM/yy' }}</h3>
+                            </div>
+                            <div class="col-md-4">
+                                <h3 class="text-right text-muted">Booked by {{ job.jobData.created_by }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 ng-if="job.type == 'create'">New Job</h3>
+                        <h3 ng-if="job.type == 'view'">Job Details</h3>
+                        <h3 ng-if="job.type == 'update'">update Job Profile</h3>
+                    </div>
+                    <div class="card-body">
+                        <form ng-submit="job.saveJob()">
+                            <div class="row" ng-if="job.type == 'create' || job.type == 'edit'">
+                                <div class="col-md-12 pr-2">
+                                    <div class="form-group">
+                                        <label>Product Condition</label>
+                                        <input type="text" class="form-control" ng-model="job.jobData.condition">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="job.type == 'create' || job.type == 'edit'">
+                                <div class="col-md-12 pr-2">
+                                    <div class="form-group">
+                                        <label>Accessories</label>
+                                        <input type="text" class="form-control" ng-model="job.jobData.accessories">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr ng-if="job.type == 'create' || job.type == 'edit'">
+                            <div class="row">
+                                <div class="col-md-12 pr-2">
+                                    <div class="form-group">
+                                        <label>Short Fault Description</label>
+                                        <input type="text" class="form-control" ng-if="job.type == 'create' || job.type == 'edit'" ng-model="job.jobData.short_desc">
+                                        <input type="text" class="form-control" disabled="" ng-if="job.type == 'view'" ng-model="job.jobData.short_desc">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 pr-2">
+                                    <div class="form-group">
+                                        <label>Full Fault Description</label>
+                                        <textarea rows="5" class="form-control" ng-if="job.type == 'create' || job.type == 'edit'" ng-model="job.jobData.full_desc"></textarea>
+                                        <textarea rows="5" class="form-control" disabled="" ng-if="job.type == 'view'" ng-model="job.jobData.full_desc"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 pr-2">
+                                    <div class="form-group">
+                                        <label>Passwords</label>
+                                        <textarea rows="2" class="form-control" ng-if="job.type == 'create' || job.type == 'edit'" ng-model="job.jobData.passwords"></textarea>
+                                        <textarea rows="2" class="form-control" disabled="" ng-if="job.type == 'view'" ng-model="job.jobData.passwords"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <a ng-href="/jobs" class="btn btn-info btn-round pull-left" ng-if="job.type == 'view'">Back to list</a>
+                            
+                            <a ng-href="/jobs/{{job.jobData._id}}" class="btn btn-danger btn-round pull-left" ng-if="job.type == 'update'">Cancel</a>
+                            
+                            <a ng-href="/jobs/{{job.jobData._id}}/update" class="btn btn-info btn-round btn-fill pull-right" ng-if="job.type == 'view'">update Profile</a>
+                            
+                            <button type="submit" class="btn btn-info btn-fill btn-round pull-right" ng-if="job.type == 'create'">Create Job</button>
+                            
+                            <button type="submit" class="btn btn-info btn-fill btn-round pull-right" ng-if="job.type == 'update'">Update Profile</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="text-left text-muted">18/04/18 23:45</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-right text-muted">MarkZ</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form ng-submit="job.saveNote()">
+                                    <div class="form-group">
+                                        <textarea rows="2" class="form-control" ng-model="job.jobData.note"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-info btn-fill btn-round pull-right" ng-if="job.type == 'view'">Add Note</button>
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-repeat="comment in job.jobData.notes | orderBy: '-left_at'" class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="text-left text-muted">{{ comment.left_at | date: 'dd/MM/yy HH:mm' }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-right text-muted">{{comment.left_by}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                
+                                    <div class="form-group">
+                                        <textarea disabled="" rows="2" class="form-control" ng-model="comment.note"></textarea>
+                                    </div>
+                                    
+                                    <div class="clearfix"></div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="col-md-12">
+                    <div class="card card-user">
+                        <div class="card-header text-center">
+                            <a ng-href="/customers/{{job.customerData._id}}">
+                                <h3 class="title">{{ job.customerData.title }} {{ job.customerData.first_name }} {{ job.customerData.last_name }}</h3> 
+                            </a>
+                            <hr>
+                        </div>
+                        <div class="card-body text-center">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-12 pr-1">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <p>{{ job.customerData.house }}, {{ job.customerData.street }}, {{ job.customerData.city }}, {{ job.customerData.postcode }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 pr-1">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <p>{{ job.customerData.email }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 pr-1">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <p>{{ job.customerData.phone }}<br>
+                                            {{ job.customerData.alt_phone }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card card-user">
+                        <div class="card-header text-center">
+                            <a ng-href="/products/{{job.deviceData._id}}">
+                                <h3 class="title">{{ job.deviceData.make }} {{ job.deviceData.model }}</h3> 
+                            </a>
+                            <hr>
+                        </div>
+                        <div class="card-body text-center">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 pr-1">
+                                        <div class="form-group">
+                                            <label>Type</label>
+                                            <p>{{ job.deviceData.type }}</p>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-6 pr-1">
+                                        <div class="form-group">
+                                            <label>Colour</label>
+                                            <p>{{ job.deviceData.colour }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 pr-1">
+                                        <div class="form-group">
+                                            <label>Serial Number</label>
+                                            <p>{{ job.deviceData.serial }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pr-1">
+                                        <div class="form-group">
+                                            <label>D.O.P</label>
+                                            <p>{{ job.deviceData.dop | date: dd/MM/yyyy }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 pr-1">
+                                        <div class="form-group">
+                                            <label>Condition</label>
+                                            <p>{{ job.jobData.condition }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pr-1">
+                                        <div class="form-group">
+                                            <label>Accessories</label>
+                                            <p>{{ job.jobData.accessories }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div> 
+    </div>
+</div>
