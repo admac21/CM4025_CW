@@ -357,7 +357,6 @@ body>.navbar-collapse {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0;
     width: 260px;
     display: block;
     z-index: 1;
@@ -615,8 +614,15 @@ body>.navbar-collapse:after {
     opacity: 1;
 }
 
-.sidebar[data-image]:after,
-.sidebar.has-image:after,
+.sidebar-left[data-image]:after,
+.sidebar-left.has-image:after,
+body>.navbar-collapse[data-image]:after,
+body>.navbar-collapse.has-image:after {
+    opacity: .77;
+}
+
+.sidebar-right[data-image]:after,
+.sidebar-right.has-image:after,
 body>.navbar-collapse[data-image]:after,
 body>.navbar-collapse.has-image:after {
     opacity: .77;
@@ -709,8 +715,8 @@ body>.navbar-collapse[data-color="purple"]:after {
 .main-panel {
     background: rgba(203, 203, 210, 0.15);
     position: relative;
-    float: right;
-    width: calc(100% - 260px);
+    left: 260px;
+    width: calc(100% - 520px);
     min-height: 100%;
 }
 
@@ -5337,3 +5343,33 @@ License - nucleoapp.com/license/
 }
 
 /* all icon font classes list here */
+
+/*Custome CSS*/
+.sidebar-left {
+    left:0;
+}
+
+.sidebar-right {
+    right:0;
+}
+
+#chat{
+    width:260px;
+    height:600px;
+    padding: 20px;
+    background: rgba(255,255,255,0.2);
+}
+#users{
+    width:226px;
+    height:200px;
+    background: rgba(255,255,255,0.2);
+    padding: 20px;
+    border-radius: 5px;
+    margin:17px
+    
+}
+
+#contentWrap{
+    display:none;
+}
+

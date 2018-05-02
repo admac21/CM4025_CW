@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Umbra</title>
+    <title>RCS</title>
     
     <!-- FOR ANGULAR ROUTING -->
         <base href="/">
@@ -20,8 +20,6 @@
     <!-- CSS Files -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
         <link href="assets/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
-        <link href="assets/css/demo.css" rel="stylesheet" />
-        <!--<link href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" rel="stylesheet" />-->
    
     <!-- JS -->
         <!-- load angular and angular-route via CDN -->
@@ -31,46 +29,26 @@
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
-        <!--<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>-->
     
-        <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="assets/js/plugins/socket.io.js"></script>
         <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
         <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-        <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
         <script src="assets/js/plugins/bootstrap-switch.js"></script>
-        <!--  Google Maps Plugin    -->
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-        <!--  Chartist Plugin  -->
-        <script src="assets/js/plugins/chartist.min.js"></script>
-        <!--  Notifications Plugin    -->
-        <script src="assets/js/plugins/bootstrap-notify.js"></script>
-        <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
         <script src="assets/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
-            <script src="assets/js/demo.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
-
-        //demo.showNotification();
-
-    });
-</script>
     
     
     <!-- Controllers -->
 		<script src="app/controllers/mainCtrl.js"></script>
 		<script src="app/controllers/userCtrl.js"></script>
-        <script src="app/controllers/custCtrl.js"></script>
-        <script src="app/controllers/productCtrl.js"></script>
         <script src="app/controllers/jobCtrl.js"></script>
+        <script src="app/controllers/teamCtrl.js"></script>
 		
     <!-- services -->
 		<script src="app/services/authService.js"></script>
 		<script src="app/services/userService.js"></script>
-        <script src="app/services/custService.js"></script>
-        <script src="app/services/productService.js"></script>
         <script src="app/services/jobService.js"></script>
+        <script src="app/services/teamService.js"></script>
 
     <!-- main Angular app files -->
 		<script src="app/app.routes.js"></script>
@@ -78,56 +56,90 @@
 
 </head>
 
-<body ng-app="umbra" ng-controller="mainController as main">
+<body ng-app="RCS" ng-controller="mainController as main">
     <div class="wrapper">
-        <div class="sidebar" data-color="blue">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-        Tip 2: you can also add an image using data-image tag
-    -->
-            
+        <div class="sidebar sidebar-left" data-color="blue" data-image="assets/img/cpu-1.jpg">
             <div class="sidebar-wrapper">
-                <div class="logo">
-                    <a href="/" class="simple-text">
-                        Umbra
-                    </a>
+                <div ng-if="main.loggedIn">
+                    <div class="logo">
+                        <a href="/" class="simple-text">
+                            Navigation
+                        </a>
+                    </div>
+                    <ul class="nav">
+                        <li ng-class="{ active: location === '/' }">
+                            <a class="nav-link" href="/">
+                                <i class="nc-icon nc-controller-modern"></i>
+                                <p>Play</p>
+                            </a>
+                        </li>
+                        <li ng-class="{ active: location === '/users' }">
+                            <a class="nav-link" href="/users">
+                                <i class="nc-icon nc-circle-09"></i>
+                                <p>Players</p>
+                            </a>
+                        </li>
+                        <li ng-class="{ active: location === '/customers' }">
+                            <a class="nav-link" href="/teams">
+                                <i class="nc-icon nc-atom"></i>
+                                <p>Teams</p>
+                            </a>
+                        </li>
+                        <li ng-class="{ active: location === '/jobs' }">
+                            <a class="nav-link" href="/jobs">
+                                <i class="nc-icon nc-paper-2"></i>
+                                <p>Jobs</p>
+                            </a>
+                        </li>
+                    </ul> 
                 </div>
-                <ul class="nav"  ng-if="main.loggedIn">
-                    <li ng-class="{ active: location === '/' }">
-                        <a class="nav-link" href="/">
-                            <i class="nc-icon nc-chart-pie-35"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li ng-class="{ active: location === '/users' }">
-                        <a class="nav-link" href="/users">
-                            <i class="nc-icon nc-badge"></i>
-                            <p>Staff</p>
-                        </a>
-                    </li>
-                    <li ng-class="{ active: location === '/customers' }">
-                        <a class="nav-link" href="/customers">
-                            <i class="nc-icon nc-circle-09"></i>
-                            <p>Customers</p>
-                        </a>
-                    </li>
-                    <li ng-class="{ active: location === '/jobs' }">
-                        <a class="nav-link" href="/jobs">
-                            <i class="nc-icon nc-paper-2"></i>
-                            <p>Jobs</p>
-                        </a>
-                    </li>
-                </ul>  
             </div>
         </div>
-          
+        
+        <!-- Sidebar for chat feature -->
+        <div class="sidebar sidebar-right" data-color="blue" data-image="assets/img/cpu-2.jpg">
+            <div class="sidebar-wrapper">
+                <div ng-if="main.loggedIn">
+                    <div class="logo">
+                        <a href="/" class="simple-text">
+                            Chat
+                        </a>
+                    </div>
+                    <!-- Form to enter nickname/alias -->
+                    <div class="container-fluid"  id="nickWrap" >
+                        <p>Enter your alias to start chatting:</p>
+                        <p id="nickError"></p>
+                        <form id="setNick" class="form-group">
+                            <input type="text" class="form-control mb-2" id="nickname">
+                            <input type="submit" class="form-control">
+                        </form>
+                    </div>
+
+                    <!-- Main chat div -->
+                    <div id="contentWrap">
+                        <div id="chatWrap">
+                            <div id="chat"></div>
+                            <div class="container-fluid">
+                                <form id="send-message" class="form-group">
+                                    <input type="text" class="form-control mt-2 mb-2" id="message">
+                                    <input type="submit" class="form-control">
+                                </form>
+                                <p>Users online:</p>
+                            </div>
+                        </div>
+                        <!-- Display all user -->
+
+                        <div id="users"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
             
         <div class="main-panel">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class=" container-fluid  ">
-                    <a class="navbar-brand" href="https://www.youtube.com/watch?v=qt-iccuOSLI"> Alpha Build </a>
+                    <a class="navbar-brand" href="https://www.youtube.com/watch?v=qt-iccuOSLI"> Repair Center Simulator</a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -139,7 +151,7 @@
 
                             <li class="nav-item">
                                 <a ng-if="main.loggedIn">
-                                    <span class="no-icon">Logged in as {{ main.user.username }}</span>
+                                    <span class="no-icon">Logged in as {{ main.user.username }} ({{main.user.level}})</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -157,9 +169,63 @@
                 <div ng-view></div>
             </main>
         </div>
+
     </div>
             
            
 
 </body>
+    
+<!-- Javascript for chat feature -->
+<script>
+    jQuery(function($){
+        var socket = io.connect(); // Connect to socket.io
+        var $nickForm = $('#setNick');
+        var $nickError = $('#nickError');
+        var $nickBox = $('#nickname');
+        var $users = $('#users');
+        var $messageForm = $('#send-message');
+        var $messageBox = $('#message');
+        var $chat = $('#chat');
+        
+        $nickForm.submit(function(e){
+            e.preventDefault();
+            socket.emit('new user', $nickBox.val(), function(data){
+                if(data){
+                    $('#nickWrap').hide();
+                    $('#contentWrap').show();
+                } else {
+                    $nickError.html('A user with that name already exists.');
+                }
+            });
+            $nickBox.val('');
+        });
+        
+        $messageForm.submit(function(e){
+            e.preventDefault();
+            socket.emit('send message', $messageBox.val());
+            $messageBox.val('');
+        });
+       
+        socket.on('new message', function(data){
+            $chat.append('<strong>' + data.nick + ':</strong> ' + data.msg + "<br/>");
+        });
+        
+        /*Get list of active users*/
+        socket.on('usernames', function(data){
+            var html = '';
+            for (i=0; i < data.length; i++){
+                html += data[i] + '<br/>';
+                $users.html(html);
+            }
+        });
+        
+        /*Remove user when they leave*/
+        socket.on('disconnect', function(data){
+            if(!socket.nickname) return;
+            nicknames.splice(nicknames.indexOf(socket.nickname),1);
+            io.sockets.emit('usernames', nicknames);
+        });
+    });
+</script>    
 </html>

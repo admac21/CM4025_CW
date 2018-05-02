@@ -1,4 +1,4 @@
-angular.module('umbra', [
+angular.module('RCS', [
 	'ngAnimate',
     'ngMaterial',
     'ngMessages',
@@ -7,12 +7,10 @@ angular.module('umbra', [
 	'mainCtrl',
 	'userCtrl',
 	'userService',
-    'custCtrl',
-    'custService',
-    'productCtrl',
-    'productService',
     'jobCtrl',
-    'jobService'
+    'jobService',
+    'teamCtrl',
+    'teamService'
 ])
 
 

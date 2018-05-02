@@ -4,8 +4,8 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h3 ng-if="user.type == 'create'">New Staff Member</h3>
-                        <h3 ng-if="user.type == 'view'">Staff Profile</h3>
+                        <h3 ng-if="user.type == 'register'">New Player</h3>
+                        <h3 ng-if="user.type == 'view'">Player Profile</h3>
                         <h3 ng-if="user.type == 'edit'">Edit Staff Profile</h3>
                     </div>
                     <div class="card-body">
@@ -14,32 +14,90 @@
                                 <div class="col-md-4 pr-1">
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input type="text" class="form-control" ng-if="user.type == 'create' || user.type == 'edit'" ng-model="user.userData.name">
+                                        <input type="text" class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.name">
                                         <input type="text" class="form-control" disabled="" ng-if="user.type == 'view'" ng-model="user.userData.name">
                                     </div>
                                 </div>
                                 <div class="col-md-4 px-1">
                                     <div class="form-group">
                                         <label>Username</label>
-                                        <input type="text" class="form-control" ng-if="user.type == 'create' || user.type == 'edit'" ng-model="user.userData.username">
+                                        <input type="text" class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.username">
                                         <input type="text" class="form-control" disabled="" ng-if="user.type == 'view'" ng-model="user.userData.username">
                                     </div>
                                 </div>
                                 <div class="col-md-4 pl-1">
                                     <div class="form-group">
                                         <label>Password</label>
-                                        <input type="password" class="form-control" ng-if="user.type == 'create' || user.type == 'edit'" ng-model="user.userData.password">
+                                        <input type="password" class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.password">
                                         <input type="password" class="form-control" disabled="" ng-if="user.type == 'view'" ng-model="user.userData.password">
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Class</label>
+                                        
+                                        <select class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.class" ng-change="classChange()" ng-options="x for x in classes"></select>
+                                        
+                                        <p class="form-control" ng-if="user.type == 'view'" ng-model="user.userData.class">{{user.userData.class}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        <label>Hardware Repair Skill</label>
+                                        <input type="text" class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.hardware" disabled="">
+                                        <input type="text" class="form-control" disabled="" ng-if="user.type == 'view'" ng-model="user.userData.hardware">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 px-1">
+                                    <div class="form-group">
+                                        <label>Software Repair Skill</label>
+                                        <input type="text" class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.software" disabled="">
+                                        <input type="text" class="form-control" disabled="" ng-if="user.type == 'view'" ng-model="user.userData.software">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        <label>Virus Removal Skill</label>
+                                        <input type="text" class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.virus" disabled="">
+                                        <input type="text" class="form-control" disabled="" ng-if="user.type == 'view'" ng-model="user.userData.virus">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        <label>Data Recovery Skill</label>
+                                        <input type="text" class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.data" disabled="">
+                                        <input type="text" class="form-control" disabled="" ng-if="user.type == 'view'" ng-model="user.userData.data">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 px-1">
+                                    <div class="form-group">
+                                        <label>Google Skill</label>
+                                        <input type="text" class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.google" disabled="">
+                                        <input type="text" class="form-control" disabled="" ng-if="user.type == 'view'" ng-model="user.userData.google">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        <label>Customer Service Skill</label>
+                                        <input type="text" class="form-control" ng-if="user.type == 'register' || user.type == 'edit'" ng-model="user.userData.service" disabled="">
+                                        <input type="text" class="form-control" disabled="" ng-if="user.type == 'view'" ng-model="user.userData.service">
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <a ng-href="/users" class="btn btn-info btn-round pull-left" ng-if="user.type == 'view'">Back to list</a>
                             
-                            <a ng-href="/users/{{user.userData._id}}" class="btn btn-danger btn-round pull-left" ng-if="user.type == 'edit'">Cancel</a>
+                            <a ng-href="/teams" class="btn btn-danger btn-round pull-left" ng-if="user.type == 'edit'">Cancel</a>
                             
                             <a ng-href="/users/{{user.userData._id}}/edit" class="btn btn-info btn-round btn-fill pull-right" ng-if="user.type == 'view'">Edit Profile</a>
                             
-                            <button type="submit" class="btn btn-info btn-fill btn-round pull-right" ng-if="user.type == 'create'">Create Profile</button>
+                            <button type="submit" class="btn btn-info btn-fill btn-round pull-right" ng-if="user.type == 'register'">Register Profile</button>
                             
                             <button type="submit" class="btn btn-info btn-fill btn-round pull-right" ng-if="user.type == 'edit'">Update Profile</button>
                             
@@ -47,6 +105,28 @@
                         </form>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-4" ng-if="user.type == 'view'">
+                <div class="card card-user">
+                    <div class="card-image">
+                        <img src="assets/img/shop-2.jpg">
+                    </div>
+                    <div class="card-body">
+                        <div class="author">
+                            <a href="#">
+                                <img class="avatar border-gray" src="assets/img/faces/repair-icon.jpg" alt="...">
+                                <h4>{{user.userData.team}}</h4>
+                            </a>
+                            <p class="description">Funds: £990.5</p>
+                        </div>
+                        <p class="description text-center"> Level: 20</p>
+                    </div>
+                    <hr>
+                    <div class="button-continer mr-auto ml-auto pb-2">
+                        <a href="#" ng-click="user.clearTeam()" class="btn btn-danger btn-round">Leave Team</a>
+                    </div>
+                </div>
+            
             </div>
         </div> 
     </div>

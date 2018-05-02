@@ -6,7 +6,7 @@ angular.module('authService', [])
   // inject $q to return promise objects
   // inject AuthToken to manage tokens
   // ===================================================
-  .factory('Auth', function($http, $q, AuthToken) {
+  .factory('Auth', function($http, $q, AuthToken, User) {
 
     // create auth factory object
     var authFactory = {};
@@ -50,6 +50,23 @@ angular.module('authService', [])
         return $q.reject({
           message: 'User has no token.'
         });
+    };
+    
+    // get a user by username if they are logged in.
+    authFactory.isInTeam = function(username){
+        // Check if user is logged in
+        if(AuthToken.getToken()){
+            // If user is logged in, check if they are in a team
+            /*User.findOne({username : username},function(err,user){
+                if(err) return res.send(err);
+
+                if(user.team == ''){
+                    return false;
+                } else {
+                    return true;
+                }
+            });*/
+        }
     };
 
     authFactory.createSampleUser = function() {

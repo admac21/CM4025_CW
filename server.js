@@ -1,5 +1,3 @@
-// FANCY MESSAGE
-
 //BASE SETUP
 //===================================
 
@@ -11,6 +9,9 @@ var morgan 		= require('morgan');		// used to see requests
 var mongoose	= require('mongoose');		
 var config 		= require('./config');
 var path		= require('path');
+var server      = require ('http').createServer(app);
+var io          = require('socket.io').listen(server);
+var nicknames   = [];
 
 
 // APP CONFIGURATION =================
@@ -53,7 +54,26 @@ app.get('*', function(req,res){
 	res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
 });
 
+io.sockets.on('connection', function(socket){
+    
+    socket.on('new user', function(data, callback){
+        if (nicknames.indexOf(data) != -1){
+            callback(false);
+        } else {
+            callback(true)
+            socket.nickname = data;
+            nicknames.push(socket.nickname);
+            io.sockets.emit('usernames', nicknames);
+        }
+    });
+    
+    socket.on('send message', function(data){
+        io.sockets.emit('new message', {msg: data, nick: socket.nickname});
+    });
+});
+
 // START THE SERVER
 //===================================
-app.listen(config.port);
+server.listen(config.port);
+/*app.listen(config.port);*/
 console.log('Magic happens on port ' + config.port);

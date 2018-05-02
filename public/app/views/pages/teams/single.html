@@ -1,0 +1,78 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 ng-if="team.type == 'create'">New Team</h3>
+                        <h3 ng-if="team.type == 'view'">Team Details</h3>
+                        <h3 ng-if="team.type == 'edit'">Edit Team</h3>
+                    </div>
+                    <div class="card-body">
+                        <form ng-submit="team.saveTeam()">
+                            <div class="row">
+                                <div class="col-md-6 pr-1">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" ng-if="team.type == 'create' || team.type == 'edit'" ng-model="team.teamData.teamName">
+                                        <input type="text" class="form-control" disabled="" ng-if="team.type == 'view'" ng-model="team.teamData.teamName">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label ng-if="team.type == 'edit' || team.type == 'view'">Funds (£)</label>
+                                        <input type="text" class="form-control" ng-if="team.type == 'edit'" ng-model="team.teamData.money">
+                                        <input type="text" class="form-control" disabled="" ng-if="team.type == 'view'" ng-model="team.teamData.money">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 pr-2">
+                                    <div class="form-group">
+                                        <label ng-if="team.type == 'edit' || team.type == 'view'">Level</label>
+                                        <input type="text" class="form-control" ng-if="team.type == 'edit'" ng-model="team.teamData.level">
+                                        <input type="text" class="form-control" disabled="" ng-if="team.type == 'view'" ng-model="team.teamData.level">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="team.type == 'edit' || team.type == 'view'">
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        <label>Created By</label>
+                                        <input type="text" class="form-control" ng-if="team.type == 'edit'" ng-model="team.teamData.created_by">
+                                        <input type="text" class="form-control" disabled="" ng-if="team.type == 'view'" ng-model="team.teamData.created_by">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 px-1">
+                                    <div class="form-group">
+                                        <label>Store Size</label>
+                                        <input type="text" class="form-control" ng-if="team.type == 'edit'" ng-model="team.teamData.store_size">
+                                        <input type="text" class="form-control" disabled="" ng-if="team.type == 'view'" ng-model="team.teamData.store_size">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Equipment</label>
+                                        <input type="text" class="form-control" ng-if="team.type == 'edit'" ng-model="team.teamData.tools" >
+                                        <input type="text" class="form-control" disabled="" ng-if="team.type == 'view'" ng-model="team.teamData.tools">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <a ng-href="/teams" class="btn btn-info btn-round pull-left" ng-if="team.type == 'view'">Back to Teams</a>
+                            
+                            <a ng-href="/teams" class="btn btn-danger btn-round pull-left" ng-if="team.type == 'create'">Cancel</a>
+                            
+                            <a ng-href="/teams/{{team.teamData._id}}" class="btn btn-danger btn-round pull-left" ng-if="team.type == 'edit'">Cancel</a>
+                            
+                            <a href="#" ng-click="team.joinTeam()" class="btn btn-info btn-round btn-fill pull-right" ng-if="team.type == 'view'">Join Team</a>
+                            
+                            <button type="submit" class="btn btn-info btn-fill btn-round pull-right" ng-if="team.type == 'create'">Add Team</button>
+                            
+                            <button type="submit" class="btn btn-info btn-fill btn-round pull-right" ng-if="team.type == 'edit'">Update Team</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>

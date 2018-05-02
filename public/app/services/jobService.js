@@ -4,11 +4,24 @@ angular.module('jobService', [])
 	
 	// create a new object
 	var jobFactory = {};
+    
+    var chosen;
 	
 	// get a single job
 	jobFactory.get = function(id) {
 		return $http.get('/api/jobs/' + id);
 	};
+    
+    // Save the chosen repair
+    jobFactory.saveChosen = function(person){
+        chosen = person;
+        console.log(chosen);
+    };
+    
+    // Return the chosen person
+    jobFactory.getChosen = function(){
+        return chosen;
+    };
 	
 	// get all jobs
 	jobFactory.all = function() {

@@ -27,7 +27,7 @@ $routeProvider
     })
 
     // form to create a new user, same view as edit page
-    .when('/users/create', {
+    .when('/users/register', {
         templateUrl : 'app/views/pages/users/single.html',
         controller 	: 'userCreateController',
         controllerAs: 'user'
@@ -46,58 +46,27 @@ $routeProvider
         controller  : 'userEditController',
         controllerAs: 'user'
     })
-
-    // CUSTOMERS ----------------------------------------------------- //
-    // form for the all customers page
-    .when('/customers', {
-        templateUrl : 'app/views/pages/customers/all.html',
-        controller  : 'custController',
-        controllerAs: 'customer'
-    })
-
-    // form to create a new customer, same view as edit page
-    .when('/customers/create', {
-        templateUrl : 'app/views/pages/customers/single.html',
-        controller  : 'custCreateController',
-        controllerAs: 'customer'
+    
+    // TEAMS --------------------------------------------------------- //
+    // route for the all users page
+    .when('/teams', {
+        templateUrl : 'app/views/pages/teams/all.html',
+        controller	: 'teamController',
+        controllerAs: 'team'
     })
     
-    // form to view a customer
-    .when('/customers/:customer_id', {
-        templateUrl : 'app/views/pages/customers/single.html',
-        controller  : 'custViewController',
-        controllerAs: 'customer'
+    // form to create a new team, same view as edit page
+    .when('/teams/create', {
+        templateUrl : 'app/views/pages/teams/single.html',
+        controller  : 'teamCreateController',
+        controllerAs: 'team'
     })
     
-    // form to edit a customer
-    .when('/customers/:customer_id/edit', {
-        templateUrl : 'app/views/pages/customers/single.html',
-        controller  : 'custEditController',
-        controllerAs: 'customer'
-    })
-    
-    // PRODUCTS ------------------------------------------------------ //
-
-    
-    // form to create a new product, same view as edit page
-    .when('/products/create/:customer_id', {
-        templateUrl : 'app/views/pages/products/single.html',
-        controller  : 'productCreateController',
-        controllerAs: 'product'
-    })
-    
-    // form to view a product
-    .when('/products/:product_id', {
-        templateUrl : 'app/views/pages/products/single.html',
-        controller  : 'productViewController',
-        controllerAs: 'product'
-    })
-    
-    // form to edit a product
-    .when('/products/:product_id/edit', {
-        templateUrl : 'app/views/pages/products/single.html',
-        controller  : 'productEditController',
-        controllerAs: 'product'
+    // form to create a new team, same view as edit page
+    .when('/teams/:team_id', {
+        templateUrl : 'app/views/pages/teams/single.html',
+        controller  : 'teamViewController',
+        controllerAs: 'team'
     })
     
     // JOBS ---------------------------------------------------------- //
@@ -110,9 +79,9 @@ $routeProvider
     })
 
     // form to create a new job, same view as edit page
-    .when('/jobs/create/:device_id', {
+    .when('/jobs/repair', {
         templateUrl : 'app/views/pages/jobs/single.html',
-        controller 	: 'jobCreateController',
+        controller 	: 'jobViewController',
         controllerAs: 'job'
     })
     

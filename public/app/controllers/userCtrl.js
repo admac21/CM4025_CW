@@ -45,13 +45,56 @@ angular.module('userCtrl', ['userService'])
 })
 
 // controller applied to user creation page
-.controller('userCreateController', function($location, User) {
+.controller('userCreateController', function($location, $scope, User) {
 	
 	var vm = this;
 	
 	// variable to hide/show elements of the view
 	// differentiates between create or edit pages
-	vm.type = 'create';
+	vm.type = 'register';
+    $scope.user = {};
+    $scope.user.userData = {};
+    $scope.user.userData.hardware = 0;
+    
+    $scope.classes = ["Hardware Technician", "Software Technician", "Data Technician", "General Technician"];
+    
+    $scope.classChange = function() {
+        switch($scope.user.userData.class){
+            case 'Hardware Technician':
+                $scope.user.userData.hardware = 10;
+                $scope.user.userData.software = 5;
+                $scope.user.userData.virus = 3;
+                $scope.user.userData.data = 1;
+                $scope.user.userData.google = 5;
+                $scope.user.userData.service = 6;
+                break;
+            case 'Software Technician':
+                $scope.user.userData.hardware = 1;
+                $scope.user.userData.software = 8;
+                $scope.user.userData.virus = 8;
+                $scope.user.userData.data = 3;
+                $scope.user.userData.google = 6;
+                $scope.user.userData.service = 4;
+                break;
+            case 'Data Technician':
+                $scope.user.userData.hardware = 1;
+                $scope.user.userData.software = 5;
+                $scope.user.userData.virus = 6;
+                $scope.user.userData.data = 10;
+                $scope.user.userData.google = 4;
+                $scope.user.userData.service = 4;
+                break;
+            default:
+                $scope.user.userData.hardware = 4;
+                $scope.user.userData.software = 4;
+                $scope.user.userData.virus = 5;
+                $scope.user.userData.data = 4;
+                $scope.user.userData.google = 5;
+                $scope.user.userData.service = 8;
+        }
+        
+        
+    };
 	
 	// function to create a user
 	vm.saveUser = function() {
@@ -65,14 +108,14 @@ angular.module('userCtrl', ['userService'])
 			.then(function(data) {
 				vm.processing = false;
 				
-				// return to user list
-				$location.path('/users');
+				// return to home
+				$location.path('/');
 			});
 	};
 })
 
 // controller applied to user view page
-.controller('userViewController', function($routeParams, User){
+.controller('userViewController', function($routeParams, $location, User){
      
     var vm = this;
     
@@ -86,6 +129,24 @@ angular.module('userCtrl', ['userService'])
         .then(function(data){
         vm.userData = data.data;
     });
+    
+    // function to clear the team
+    vm.clearTeam = function(){
+        console.log(vm.userData.team);
+        vm.userData.team = "";
+        console.log(vm.userData._id);
+        
+        // call the userService function to update
+        User.update(vm.userData._id, vm.userData)
+            .then(function(data){
+            console.log(vm.userData);
+            // return to profile view
+            $location.path('/users/' + $routeParams.user_id.toString());
+            
+            // bind the message from our API to vm.message
+            vm.message = data.message;
+        });
+    };
 })
 
 // controller applied to user edit page
@@ -96,6 +157,8 @@ angular.module('userCtrl', ['userService'])
     // variable to hide/show elements of the view
     // differentiates between create or edit pages
     vm.type = 'edit';
+    
+    
 
     // get the user data for the user you want to edit
     // $routeParams is the way we grab data from the URL

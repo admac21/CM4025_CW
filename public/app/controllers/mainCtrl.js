@@ -1,6 +1,6 @@
 angular.module('mainCtrl', [])
 
-.controller('mainController', function($scope, $rootScope, $location, Auth) {
+.controller('mainController', function($scope, $rootScope, $location, Auth, User) {
 	
 	var vm = this;
     
@@ -20,6 +20,12 @@ angular.module('mainCtrl', [])
 		Auth.getUser()
 			.then(function(response) {
 				vm.user = response.data;
+                $scope._id = vm.user._id;
+                User.get(vm.user._id)
+                .then(function(user){
+                    vm.user = user.data;
+                })
+                console.log(vm.user);
 			});
 	});
 	
@@ -51,6 +57,20 @@ angular.module('mainCtrl', [])
 		
 		$location.path('/login');
 	};
+    
+    // function to check if a user is part of a team
+    vm.inTeam = Auth.isInTeam();
+    
+/*    vm.inTeam = function() {
+        User.findOne({username : vm.user.username}, function(err, user){
+            if(err) return res.send(err);
+            if(user.team == ""){
+               return 'false';
+            } else {
+               return 'true';
+            }
+        });
+    };*/
 
 	vm.createSample = function() {
 		Auth.createSampleUser();

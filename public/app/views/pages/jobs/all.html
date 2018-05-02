@@ -7,51 +7,52 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <div class="card striped-tabled-with-hover">
-                    <div class="card-header">
-                        <h1 class="card-title">Jobs<a href="/jobs/create" class="btn btn-primary btn-fill pull-right btn-round">
-                            <i class="nc-icon nc-simple-add"></i>
-                            <span>New Job</span>
-                        </a></h1>
-                        
+            <div class="col-md-12 text-center">
+                <div class="card">
+                <h2>Pick a repair to work on</h2>
+                    <p>Be sure to look out for faults that match your class for a repair bonus!</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-repeat="person in job.customers" class="col-md-4" ng-if="job.view = 'select'">
+                <div class="card card-user">
+                    <div class="card-image">
+                        <img ng-src="{{person.faultImg}}" alt="...">
                     </div>
-                    <div class="card-body table-full-width table-responsive">
-                        <table class="table table-hover table-striped"  ng-show="job.jobs">
-                            <thead>
-                                <th class="col-sm-2"></th>
-                                <th>Job number</th>
-                                <th>Age</th>
-                                <th>Booked By</th>
-                                <th>Product</th>
-                                <th class="col-sm-2"></th>
-                            </thead>
-                            <tbody>
-                                <!-- LOOP OVER THE JOBS -->
-                                <tr ng-repeat="single in job.jobs" ng-init='products=getProducts(single._id)'>
-                                    <td class="col-sm-2">
-                                        <a ng-href="/jobs/{{ single._id }}" class="btn btn-info btn-fill pull-left btn-round">View</a>
-                                    </td>
-                                    <td> {{ single.job_number }} </td>
-                                    <td> 
-                                        <div>
-                                            {{ job.getAge(single.created_at) }} Days
-                                        </div>
-                                    </td>
-                                    <td> {{ single.created_by }} </td>
-                                    <td>  
-                                        <div >
-                                            {{ job.getDevice(single.product_id).make }} {{ job.getDevice(single.product_id).model }} 
-                                        </div>
-                                    </td>
-                                    <td class="col-sm-2">
-                                        <a href="#" ng-click="job.deleteJob(single)" class="btn btn-danger btn-round">X</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="card-body">
+                        <div class="author">
+                            <a href="#">
+                                <img class="avatar border-gray" ng-src="{{person.avatar}}" alt="...">
+                                <h5 class="title">{{person.firstName}} {{person.lastName}}</h5>
+                            </a>
+                            <p class="description">
+                                <label>Product:</label>
+                                <br>{{person.product}} {{person.device}}
+                            </p>
+                        </div>
+                        <p class="description text-center">
+                            <label>Fault:</label>
+                            <br> {{person.fault}}
+                        </p>
+                        <p class="description text-center">
+                            <label>Level:</label>
+                            <br> {{person.level}}
+                        </p>
+                        <p class="description text-center">
+                            <label>Reward:</label>
+                            <br> £{{person.reward}}
+                        </p>
+                        <p class="description text-center">
+                            <label>Deadline:</label>
+                            <br> {{person.time}} Hours
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="button-container mr-auto ml-auto">
+                        <a ng-click="job.chooseJob(person.id)" class="btn btn-round btn-fill btn-success mb-2">Take Job</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        
